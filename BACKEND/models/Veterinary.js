@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import generateId from "../helpers/generateId.js";
 
 
 const veterinarySchema = mongoose.Schema({
@@ -32,7 +33,8 @@ const veterinarySchema = mongoose.Schema({
         default: null //to add validation to the database
     },
     token: {
-        type: String
+        type: String,
+        default: generateId()
     },
 
     confirmed: { //check if the user is confirmed
@@ -41,6 +43,6 @@ const veterinarySchema = mongoose.Schema({
     }
 });
 
-const veterinaryModel = mongoose.model("veterinaryModel", veterinarySchema);
+const veterinaryModel = mongoose.model("veterinaries", veterinarySchema); //the first parameter is the colletion name
 
 export default veterinaryModel;
