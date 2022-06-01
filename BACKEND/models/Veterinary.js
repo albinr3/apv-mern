@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import generateId from "../helpers/generateId.js";
 
 
@@ -43,6 +44,16 @@ const veterinarySchema = mongoose.Schema({
     }
 });
 
+//with this we hash the password before save the data
+veterinarySchema.pre("save", async function (next) {
+    //we check if the password is being modified
+    if(!this.isModified("password")) {
+        next();
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+})
 const veterinaryModel = mongoose.model("veterinaries", veterinarySchema); //the first parameter is the colletion name
 
 export default veterinaryModel;
