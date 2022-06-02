@@ -126,8 +126,7 @@ export const checkTokenPassword = async (req, res) => {
 
     if(validToken) {
         res.json({msg: "Token is valid and the user exist"});
-        // validToken.token = null;
-        // await validToken.save();
+
     } else {
         const error = new Error("Token is not valid!");
         return res.status(400).json({msg: error.message});
@@ -136,8 +135,8 @@ export const checkTokenPassword = async (req, res) => {
 
 export const newPassword = async (req, res) => {
 
-    const {token} = req.params;
-    const {password} = req.body;
+    const {token} = req.params; //we get the token again.
+    const {password} = req.body; //we get the new password from the form
 
     const veterinary = await veterinaryModel.findOne({token});
 
@@ -147,11 +146,12 @@ export const newPassword = async (req, res) => {
     }
 
     try {
-        veterinary.token = null;
+        veterinary.token = null; //we eliminate the token
         veterinary.password = password;
         await veterinary.save();
 
-        res.json({msg: "Password change successful"})
+        res.json({msg: "Password change successful"});
+        
     } catch (error) {
         console.log(error)
     }
