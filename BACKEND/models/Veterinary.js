@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import generateId from "../helpers/generateId.js";
+import generateToken from "../helpers/generateToken.js";
 
 
 const veterinarySchema = mongoose.Schema({
@@ -35,7 +35,7 @@ const veterinarySchema = mongoose.Schema({
     },
     token: {
         type: String,
-        default: generateId()
+        default: generateToken()
     },
 
     confirmed: { //check if the user is confirmed
@@ -53,7 +53,12 @@ veterinarySchema.pre("save", async function (next) {
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-})
+});
+
+veterinarySchema.methods.checkPassword = async function(formPassword) {
+    return await bcrypt.compare(formPassword, this.password)
+}
+
 const veterinaryModel = mongoose.model("veterinaries", veterinarySchema); //the first parameter is the colletion name
 
 export default veterinaryModel;
