@@ -6,7 +6,7 @@ const veterinaryRouter = express.Router();
 
 //public
 veterinaryRouter.post("/", register);
-veterinaryRouter.get("/confirm/:token", confirm);
+veterinaryRouter.get("/confirm-account/:token", confirm);
 veterinaryRouter.post("/login", authenticateUser);
 veterinaryRouter.post("/forget-password", forgetPassword); //valid user email
 veterinaryRouter.get("/forget-password/:token", checkTokenPassword); //check if the token is correct

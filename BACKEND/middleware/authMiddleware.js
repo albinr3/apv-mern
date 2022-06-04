@@ -8,6 +8,7 @@ const checkAuth = async (req, res, next) => {
         try {
             //here we get the token that is created when we authenthicate
             token = req.headers.authorization.split(" ")[1]; //we eliminate the "bearer" word
+            
             const decoded = jwt.verify(token, process.env.JWT_SECRET); //we decode the toke to get the user id
             //with this we will get the user who has that id and will get the info less the password
             req.veterinary = await veterinaryModel.findById(decoded.id).select("-password -token -confirmed"); //we storage the info in express
