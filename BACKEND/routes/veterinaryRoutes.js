@@ -1,11 +1,11 @@
 import express from "express";
-import { profile, register, confirm, authenticateUser, forgetPassword, checkTokenPassword, newPassword} from "../controllers/veterinaryController.js";
+import { profile, signUp, confirm, authenticateUser, forgetPassword, checkTokenPassword, newPassword} from "../controllers/veterinaryController.js";
 import checkAuth from "../middleware/authMiddleware.js";
 
 const veterinaryRouter = express.Router();
 
 //public
-veterinaryRouter.post("/", register);
+veterinaryRouter.post("/", signUp);
 veterinaryRouter.get("/confirm-account/:token", confirm);
 veterinaryRouter.post("/login", authenticateUser);
 veterinaryRouter.post("/forget-password", forgetPassword); //valid user email

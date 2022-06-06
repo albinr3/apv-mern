@@ -4,8 +4,8 @@ import veterinaryModel from "../models/Veterinary.js";
 
 
 
-//with this function we register a new veterinary with the data send by the user
-export const register = async (req, res) => {
+//with this function we signUp a new veterinary with the data send by the user
+export const signUp = async (req, res) => {
     
     const {email} = req.body;
 
