@@ -1,7 +1,9 @@
-import {Link, useNavigate} from "react-router-dom"
-import useAuth from "../hooks/useAuth";
-import { useState } from "react";
+import {Link, Navigate, useNavigate} from "react-router-dom"
+
+import { useState, useEffect } from "react";
 import Alert from "../components/Alert";
+
+import useAuth from "../hooks/useAuth";
 
 
 function Login() {
@@ -13,7 +15,12 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const {setAuth} = useAuth();
+
   const url = `${import.meta.env.VITE_BACKEND_URL}/api/veterinaries/login`;
+ 
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,9 +58,14 @@ function Login() {
       
       //if everything is ok then
       setAlert({msg: "Password is correct, log in", error1: false})
-      localStorage.setItem("token", result.token)
+      localStorage.setItem("token", result.profile.token);
+
+      //here we pass the veterinary info direct to the auth
+      setAuth(result);
+
       //we go to the admin page after login
       navigate("/admin");
+      //window.location.reload(false);
 
     } catch (error) {
       setAlert({msg: error.message, error1: true}) //here we show the backend error on the frontend
@@ -61,6 +73,8 @@ function Login() {
 
 
   }
+
+
   
   const {msg} = alert;
 
